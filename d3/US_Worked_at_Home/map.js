@@ -95,7 +95,7 @@ function ready(error, us) {
     .attr("d", path)
     .append("title")
     .text(function(d) {
-      return d.rate + "%";
+      return d.pct_home + "%";
     });
 
   svg.append("path")

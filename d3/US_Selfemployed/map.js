@@ -3,7 +3,7 @@ var svg = d3.select("svg"),
   height = +svg.attr("height");
 
 const steps = 10;
-var q, color;
+var q, color, s;
 //The collection in which to store the data.
 var selfemployed = d3.map();
 
@@ -25,9 +25,8 @@ d3.queue()
   })
   .await(ready);
 
-function ready(error, us) {
+function ready(error, us, s) {
   if (error) throw error;
-
   q = d3.scaleQuantile()
     .domain(selfemployed.values())
     .range(d3.range(steps))
@@ -82,8 +81,6 @@ function ready(error, us) {
     .select(".domain")
     .remove();
 
-  d3.format(",.1%")
-
   svg.append("g")
     .attr("class", "counties")
     .selectAll("path")
@@ -95,7 +92,7 @@ function ready(error, us) {
     .attr("d", path)
     .append("title")
     .text(function(d) {
-      return d.rate + "%";
+      return f(d.pct_selfemployed);
     });
 
   svg.append("path")
